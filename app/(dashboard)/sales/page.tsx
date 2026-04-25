@@ -9,7 +9,7 @@ import Empty from "@/components/Empty";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-type Product = { id: string; name: string; price: number; qty: number };
+type Product = { id: string; name: string; price: number; cost: number; qty: number };
 type Customer = { id: string; name: string; vip: boolean };
 type SaleItem = { key: string; product_id: string; name: string; price: number; quantity: number };
 type Sale = {
