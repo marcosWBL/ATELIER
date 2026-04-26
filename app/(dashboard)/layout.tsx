@@ -5,7 +5,7 @@ import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import {
   LayoutDashboard, ShoppingCart, Package, Users,
-  Receipt, FileText, Settings, LogOut, Lightbulb, Menu, X,
+  Receipt, FileText, Settings, LogOut, Lightbulb, Menu, X, ArrowLeftRight,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import ThemeToggle from "@/components/ThemeToggle";
@@ -14,6 +14,7 @@ const NAV = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
   { href: "/insights", label: "Insights", icon: Lightbulb },
   { href: "/sales", label: "Vendas", icon: ShoppingCart },
+  { href: "/condicional", label: "Condicional", icon: ArrowLeftRight },
   { href: "/products", label: "Produtos", icon: Package },
   { href: "/customers", label: "Clientes", icon: Users },
   { href: "/expenses", label: "Despesas", icon: Receipt },
