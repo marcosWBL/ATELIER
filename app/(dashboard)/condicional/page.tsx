@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Plus, X, Trash2 } from "lucide-react";
+import { Plus, X, Trash2, Trash } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { fmtBRL, fmtDate, todayISO, uid } from "@/lib/utils";
 import Empty from "@/components/Empty";
@@ -562,6 +562,26 @@ export default function CondicionalPage() {
     await loadAll();
   }
 
+  async function handleDelete(c: Condicional) {
+    if (!confirm(`Excluir condicional de ${c.customer_name}? Esta ação não pode ser desfeita.`)) return;
+
+    if (c.status === "ativo") {
+      for (const item of c.items ?? []) {
+        if (!item.product_id) continue;
+        const { data: prod } = await supabase
+          .from("products").select("qty").eq("id", item.product_id).single();
+        if (prod) {
+          await supabase.from("products")
+            .update({ qty: prod.qty + item.quantity })
+            .eq("id", item.product_id);
+        }
+      }
+    }
+
+    await supabase.from("condicionais").delete().eq("id", c.id);
+    await loadAll();
+  }
+
   const today = todayISO();
 
   return (
@@ -615,22 +635,31 @@ export default function CondicionalPage() {
                       <CondicionalBadge status={c.status} />
                     </td>
                     <td className="px-4 py-3 text-right">
-                      {c.status === "ativo" && (
-                        <div className="flex items-center justify-end gap-2">
-                          <button
-                            onClick={() => setFinalizing(c)}
-                            className="rounded px-2 py-1 text-xs font-medium bg-emerald-100 text-emerald-700 hover:bg-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-400 transition-colors"
-                          >
-                            Finalizar
-                          </button>
-                          <button
-                            onClick={() => handleCancel(c)}
-                            className="rounded px-2 py-1 text-xs text-ink-3 hover:text-red-400 hover:bg-card-hover transition-colors"
-                          >
-                            Cancelar
-                          </button>
-                        </div>
-                      )}
+                      <div className="flex items-center justify-end gap-2">
+                        {c.status === "ativo" && (
+                          <>
+                            <button
+                              onClick={() => setFinalizing(c)}
+                              className="rounded px-2 py-1 text-xs font-medium bg-emerald-100 text-emerald-700 hover:bg-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-400 transition-colors"
+                            >
+                              Finalizar
+                            </button>
+                            <button
+                              onClick={() => handleCancel(c)}
+                              className="rounded px-2 py-1 text-xs text-ink-3 hover:text-red-400 hover:bg-card-hover transition-colors"
+                            >
+                              Cancelar
+                            </button>
+                          </>
+                        )}
+                        <button
+                          onClick={() => handleDelete(c)}
+                          className="rounded px-2 py-1 text-xs text-ink-3 hover:text-red-400 hover:bg-card-hover transition-colors"
+                          title="Excluir condicional"
+                        >
+                          <Trash className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 );

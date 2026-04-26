@@ -421,6 +421,31 @@ export default function SalesPage() {
     );
   }
 
+  async function handleDelete(sale: Sale) {
+    if (!confirm(`Excluir venda #${sale.id.slice(-6)}? Esta ação não pode ser desfeita.`)) return;
+
+    if (!sale.refunded) {
+      for (const item of sale.items ?? []) {
+        const prod = products.find((p) => p.id === item.product_id);
+        if (prod) {
+          await supabase.from("products").update({ qty: prod.qty + item.quantity }).eq("id", item.product_id);
+        }
+      }
+    }
+
+    await supabase.from("sales").delete().eq("id", sale.id);
+
+    setSales((prev) => prev.filter((s) => s.id !== sale.id));
+    if (!sale.refunded) {
+      setProducts((prev) =>
+        prev.map((p) => {
+          const item = sale.items?.find((i) => i.product_id === p.id);
+          return item ? { ...p, qty: p.qty + item.quantity } : p;
+        })
+      );
+    }
+  }
+
   function exportCSV() {
     const header = ["ID", "Data", "Cliente", "Pagamento", "Subtotal", "Desconto", "Total", "Devolvida"];
     const rows = sales.map((s) => [
@@ -517,6 +542,13 @@ export default function SalesPage() {
                           Devolver
                         </button>
                       )}
+                      <button
+                        onClick={() => handleDelete(sale)}
+                        className="rounded px-2 py-1 text-xs text-ink-3 hover:text-red-400 hover:bg-card-hover transition-colors"
+                        title="Excluir venda"
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </button>
                     </div>
                   </td>
                 </tr>
