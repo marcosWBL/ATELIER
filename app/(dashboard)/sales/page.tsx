@@ -384,7 +384,7 @@ export default function SalesPage() {
       await Promise.all([
         supabase.from("sales").select("*, customers(name)").eq("user_id", user.id).order("date", { ascending: false }),
         supabase.from("sale_items").select("*"),
-        supabase.from("products").select("id, name, price, qty").eq("user_id", user.id),
+        supabase.from("products").select("id, name, price, cost, qty").eq("user_id", user.id),
         supabase.from("customers").select("id, name, vip").eq("user_id", user.id),
       ]);
 
