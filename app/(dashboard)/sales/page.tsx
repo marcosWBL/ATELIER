@@ -395,7 +395,7 @@ export default function SalesPage() {
     }));
 
     setSales(enriched);
-    setProducts(prodsData ?? []);
+    setProducts((prodsData ?? []) as Product[]);
     setCustomers(custsData ?? []);
     setLoading(false);
   }
