@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Plus, Printer, X, Star, Trash2, Download } from "lucide-react";
+import { Plus, Printer, X, Star, Trash2, Download, Eye } from "lucide-react";
 import { supabase } from "@/lib/supabase";
-import { fmtBRL, todayISO, uid } from "@/lib/utils";
+import { fmtBRL, fmtDate, todayISO, uid } from "@/lib/utils";
 import StatusBadge from "@/components/StatusBadge";
 import Empty from "@/components/Empty";
 
@@ -28,6 +28,89 @@ type Sale = {
 };
 
 const PAYMENT_METHODS = ["Dinheiro", "Pix", "Cartão de crédito", "Cartão de débito", "Fiado"];
+
+// ─── Detail Modal ─────────────────────────────────────────────────────────────
+
+function DetailModal({ sale, onClose, onPrint }: { sale: Sale; onClose: () => void; onPrint: () => void }) {
+  const subtotal = sale.subtotal;
+  const discountAmt = sale.discount_type === "%" ? subtotal * (sale.discount_value / 100) : sale.discount_value;
+
+  return (
+    <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/70 px-4">
+      <div className="w-full max-w-md rounded-xl bg-card border border-rim shadow-2xl max-h-[90vh] overflow-y-auto">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-rim">
+          <div>
+            <h2 className="text-base font-semibold text-ink">Detalhes da venda</h2>
+            <p className="text-xs text-ink-3">{fmtDate(sale.date)} · {sale.payment_method}</p>
+          </div>
+          <button onClick={onClose}><X className="h-5 w-5 text-ink-2 hover:text-white" /></button>
+        </div>
+
+        <div className="p-6 space-y-4">
+          {sale.customer_name && sale.customer_name !== "-" && (
+            <div className="flex items-center gap-2 text-sm text-ink">
+              <span className="text-ink-3">Cliente:</span>
+              <span className="font-medium">{sale.customer_name}</span>
+            </div>
+          )}
+
+          <div className="rounded-lg border border-rim overflow-hidden">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-card/50 border-b border-rim">
+                  <th className="px-3 py-2 text-left text-xs text-ink-2 font-medium">Produto</th>
+                  <th className="px-3 py-2 text-center text-xs text-ink-2 font-medium">Qtd</th>
+                  <th className="px-3 py-2 text-right text-xs text-ink-2 font-medium">Preço unit.</th>
+                  <th className="px-3 py-2 text-right text-xs text-ink-2 font-medium">Total</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-rim">
+                {(sale.items ?? []).map((item) => (
+                  <tr key={item.key} className="bg-card">
+                    <td className="px-3 py-2 text-ink">{item.name}</td>
+                    <td className="px-3 py-2 text-center text-ink-2">{item.quantity}</td>
+                    <td className="px-3 py-2 text-right text-ink-2">{fmtBRL(item.price)}</td>
+                    <td className="px-3 py-2 text-right font-medium text-ink">{fmtBRL(item.price * item.quantity)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="rounded-lg bg-surface border border-rim p-4 space-y-1.5 text-sm">
+            <div className="flex justify-between text-ink-2">
+              <span>Subtotal</span><span>{fmtBRL(subtotal)}</span>
+            </div>
+            {sale.discount_value > 0 && (
+              <div className="flex justify-between text-red-400">
+                <span>Desconto</span>
+                <span>-{sale.discount_type === "%" ? `${sale.discount_value}%` : fmtBRL(discountAmt)}</span>
+              </div>
+            )}
+            <div className="flex justify-between font-bold text-base text-ink border-t border-rim pt-1.5">
+              <span>Total</span><span>{fmtBRL(sale.total)}</span>
+            </div>
+          </div>
+
+          <div className="flex gap-2">
+            <button
+              onClick={onPrint}
+              className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-rim-2 py-2 text-sm text-ink hover:bg-card-hover transition-colors"
+            >
+              <Printer className="h-4 w-4" /> Imprimir cupom
+            </button>
+            <button
+              onClick={onClose}
+              className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-card-hover py-2 text-sm text-ink hover:bg-card transition-colors"
+            >
+              Fechar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 // ─── Coupon Modal ─────────────────────────────────────────────────────────────
 
@@ -372,6 +455,7 @@ export default function SalesPage() {
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [couponSale, setCouponSale] = useState<Sale | null>(null);
+  const [detailSale, setDetailSale] = useState<Sale | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => { loadAll(); }, []);
@@ -513,7 +597,11 @@ export default function SalesPage() {
             </thead>
             <tbody className="divide-y divide-rim">
               {sales.map((sale) => (
-                <tr key={sale.id} className="bg-card hover:bg-card-hover/50 transition-colors">
+                <tr
+                  key={sale.id}
+                  onClick={() => setDetailSale(sale)}
+                  className="bg-card hover:bg-card-hover/50 transition-colors cursor-pointer"
+                >
                   <td className="px-4 py-3 text-ink">{sale.date}</td>
                   <td className="px-4 py-3 text-ink">
                     {customers.find((c) => c.id === sale.customer_id)?.vip && (
@@ -526,11 +614,12 @@ export default function SalesPage() {
                   <td className="px-4 py-3 text-center">
                     <StatusBadge status={sale.refunded ? "devolvido" : "pago"} />
                   </td>
-                  <td className="px-4 py-3 text-right">
+                  <td className="px-4 py-3 text-right" onClick={(e) => e.stopPropagation()}>
                     <div className="flex items-center justify-end gap-2">
                       <button
                         onClick={() => setCouponSale(sale)}
                         className="rounded px-2 py-1 text-xs text-ink-2 hover:text-white hover:bg-card-hover transition-colors"
+                        title="Imprimir cupom"
                       >
                         <Printer className="h-3.5 w-3.5" />
                       </button>
@@ -569,6 +658,14 @@ export default function SalesPage() {
 
       {couponSale && (
         <CouponModal sale={couponSale} onClose={() => setCouponSale(null)} />
+      )}
+
+      {detailSale && (
+        <DetailModal
+          sale={detailSale}
+          onClose={() => setDetailSale(null)}
+          onPrint={() => { setCouponSale(detailSale); setDetailSale(null); }}
+        />
       )}
     </div>
   );
