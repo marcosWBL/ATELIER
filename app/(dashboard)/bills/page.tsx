@@ -86,36 +86,36 @@ function BillModal({
 
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/70 px-4">
-      <div className="w-full max-w-lg rounded-xl bg-zinc-900 border border-zinc-800 shadow-2xl max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-800">
-          <h2 className="text-base font-semibold text-foreground">
+      <div className="w-full max-w-lg rounded-xl bg-card border border-rim shadow-2xl max-h-[90vh] overflow-y-auto">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-rim">
+          <h2 className="text-base font-semibold text-ink">
             {initial ? "Editar conta" : "Nova conta"}
           </h2>
-          <button onClick={onClose}><X className="h-5 w-5 text-zinc-400 hover:text-white" /></button>
+          <button onClick={onClose}><X className="h-5 w-5 text-ink-2 hover:text-white" /></button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {/* Descrição */}
           <div className="space-y-1">
-            <label className="text-xs text-zinc-400">Descrição *</label>
+            <label className="text-xs text-ink-2">Descrição *</label>
             <input
               type="text"
               required
               value={form.description}
               onChange={(e) => set("description", e.target.value)}
-              className="w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-sm text-foreground placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500"
+              className="w-full rounded-md border border-rim-2 bg-card-hover px-3 py-2 text-sm text-ink placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500"
               placeholder="Ex: Aluguel do espaço"
             />
           </div>
 
           {/* Fornecedor */}
           <div className="space-y-1">
-            <label className="text-xs text-zinc-400">Fornecedor <span className="text-zinc-600">(opcional)</span></label>
+            <label className="text-xs text-ink-2">Fornecedor <span className="text-ink-3">(opcional)</span></label>
             <input
               type="text"
               value={form.supplier}
               onChange={(e) => set("supplier", e.target.value)}
-              className="w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-sm text-foreground placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500"
+              className="w-full rounded-md border border-rim-2 bg-card-hover px-3 py-2 text-sm text-ink placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500"
               placeholder="Nome do fornecedor"
             />
           </div>
@@ -123,17 +123,17 @@ function BillModal({
           {/* Categoria + Valor */}
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1">
-              <label className="text-xs text-zinc-400">Categoria</label>
+              <label className="text-xs text-ink-2">Categoria</label>
               <select
                 value={form.category}
                 onChange={(e) => set("category", e.target.value)}
-                className="w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-sm text-foreground"
+                className="w-full rounded-md border border-rim-2 bg-card-hover px-3 py-2 text-sm text-ink"
               >
                 {CATEGORY_OPTIONS.map((c) => <option key={c}>{c}</option>)}
               </select>
             </div>
             <div className="space-y-1">
-              <label className="text-xs text-zinc-400">Valor *</label>
+              <label className="text-xs text-ink-2">Valor *</label>
               <input
                 type="number"
                 min={0.01}
@@ -141,7 +141,7 @@ function BillModal({
                 required
                 value={form.amount || ""}
                 onChange={(e) => set("amount", Number(e.target.value))}
-                className="w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-sm text-foreground placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500"
+                className="w-full rounded-md border border-rim-2 bg-card-hover px-3 py-2 text-sm text-ink placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500"
                 placeholder="0,00"
               />
             </div>
@@ -150,21 +150,21 @@ function BillModal({
           {/* Vencimento + Recorrência */}
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1">
-              <label className="text-xs text-zinc-400">Vencimento *</label>
+              <label className="text-xs text-ink-2">Vencimento *</label>
               <input
                 type="date"
                 required
                 value={form.due_date}
                 onChange={(e) => set("due_date", e.target.value)}
-                className="w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-sm text-foreground"
+                className="w-full rounded-md border border-rim-2 bg-card-hover px-3 py-2 text-sm text-ink"
               />
             </div>
             <div className="space-y-1">
-              <label className="text-xs text-zinc-400">Recorrência</label>
+              <label className="text-xs text-ink-2">Recorrência</label>
               <select
                 value={form.recurrence}
                 onChange={(e) => set("recurrence", e.target.value as Recurrence)}
-                className="w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-sm text-foreground"
+                className="w-full rounded-md border border-rim-2 bg-card-hover px-3 py-2 text-sm text-ink"
               >
                 {RECURRENCE_OPTIONS.map((r) => <option key={r}>{r}</option>)}
               </select>
@@ -173,12 +173,12 @@ function BillModal({
 
           {/* Observações */}
           <div className="space-y-1">
-            <label className="text-xs text-zinc-400">Observações</label>
+            <label className="text-xs text-ink-2">Observações</label>
             <textarea
               rows={3}
               value={form.notes}
               onChange={(e) => set("notes", e.target.value)}
-              className="w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-sm text-foreground placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500 resize-none"
+              className="w-full rounded-md border border-rim-2 bg-card-hover px-3 py-2 text-sm text-ink placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500 resize-none"
               placeholder="Informações adicionais..."
             />
           </div>
@@ -272,7 +272,7 @@ export default function BillsPage() {
       <div className="flex-1 p-6 space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
-          <h1 className="text-xl font-bold text-foreground">Contas a pagar</h1>
+          <h1 className="text-xl font-bold text-ink">Contas a pagar</h1>
           <button
             onClick={openCreate}
             className="flex items-center gap-2 rounded-lg bg-white px-3 py-2 text-sm font-semibold text-black hover:bg-zinc-200 transition-colors"
@@ -283,38 +283,38 @@ export default function BillsPage() {
 
         {/* Table */}
         {loading ? (
-          <p className="text-sm text-zinc-500">Carregando...</p>
+          <p className="text-sm text-ink-3">Carregando...</p>
         ) : bills.length === 0 ? (
           <Empty message="Nenhuma conta cadastrada." />
         ) : (
-          <div className="rounded-xl border border-zinc-800 overflow-hidden">
+          <div className="rounded-xl border border-rim overflow-hidden">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-zinc-800 bg-zinc-900/50">
-                  <th className="px-4 py-3 text-left text-xs text-zinc-400 font-medium">Descrição</th>
-                  <th className="px-4 py-3 text-left text-xs text-zinc-400 font-medium">Categoria</th>
-                  <th className="px-4 py-3 text-left text-xs text-zinc-400 font-medium">Fornecedor</th>
-                  <th className="px-4 py-3 text-left text-xs text-zinc-400 font-medium">Vencimento</th>
-                  <th className="px-4 py-3 text-left text-xs text-zinc-400 font-medium">Recorrência</th>
-                  <th className="px-4 py-3 text-right text-xs text-zinc-400 font-medium">Valor</th>
-                  <th className="px-4 py-3 text-center text-xs text-zinc-400 font-medium">Status</th>
-                  <th className="px-4 py-3 text-right text-xs text-zinc-400 font-medium">Ações</th>
+                <tr className="border-b border-rim bg-card/50">
+                  <th className="px-4 py-3 text-left text-xs text-ink-2 font-medium">Descrição</th>
+                  <th className="px-4 py-3 text-left text-xs text-ink-2 font-medium">Categoria</th>
+                  <th className="px-4 py-3 text-left text-xs text-ink-2 font-medium">Fornecedor</th>
+                  <th className="px-4 py-3 text-left text-xs text-ink-2 font-medium">Vencimento</th>
+                  <th className="px-4 py-3 text-left text-xs text-ink-2 font-medium">Recorrência</th>
+                  <th className="px-4 py-3 text-right text-xs text-ink-2 font-medium">Valor</th>
+                  <th className="px-4 py-3 text-center text-xs text-ink-2 font-medium">Status</th>
+                  <th className="px-4 py-3 text-right text-xs text-ink-2 font-medium">Ações</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-zinc-800">
+              <tbody className="divide-y divide-rim">
                 {bills.map((bill) => (
-                  <tr key={bill.id} className="bg-zinc-900 hover:bg-zinc-800/50 transition-colors">
-                    <td className="px-4 py-3 text-zinc-200 font-medium">
+                  <tr key={bill.id} className="bg-card hover:bg-card-hover/50 transition-colors">
+                    <td className="px-4 py-3 text-ink font-medium">
                       {bill.description}
                       {bill.notes && (
-                        <p className="text-xs text-zinc-500 mt-0.5 truncate max-w-[180px]">{bill.notes}</p>
+                        <p className="text-xs text-ink-3 mt-0.5 truncate max-w-[180px]">{bill.notes}</p>
                       )}
                     </td>
-                    <td className="px-4 py-3 text-zinc-400">{bill.category}</td>
-                    <td className="px-4 py-3 text-zinc-400">{bill.supplier || "—"}</td>
-                    <td className="px-4 py-3 text-zinc-300">{bill.due_date}</td>
-                    <td className="px-4 py-3 text-zinc-400">{bill.recurrence}</td>
-                    <td className="px-4 py-3 text-right font-medium text-foreground">{fmtBRL(bill.amount)}</td>
+                    <td className="px-4 py-3 text-ink-2">{bill.category}</td>
+                    <td className="px-4 py-3 text-ink-2">{bill.supplier || "—"}</td>
+                    <td className="px-4 py-3 text-ink">{bill.due_date}</td>
+                    <td className="px-4 py-3 text-ink-2">{bill.recurrence}</td>
+                    <td className="px-4 py-3 text-right font-medium text-ink">{fmtBRL(bill.amount)}</td>
                     <td className="px-4 py-3 text-center">
                       <StatusBadge status={billStatus(bill)} />
                     </td>
@@ -323,19 +323,19 @@ export default function BillsPage() {
                         <button
                           onClick={() => togglePaid(bill)}
                           title={bill.paid ? "Marcar como pendente" : "Marcar como pago"}
-                          className="rounded p-1.5 text-zinc-400 hover:text-emerald-400 hover:bg-zinc-700 transition-colors"
+                          className="rounded p-1.5 text-ink-2 hover:text-emerald-400 hover:bg-card-hover transition-colors"
                         >
                           <CheckCircle className="h-4 w-4" />
                         </button>
                         <button
                           onClick={() => openEdit(bill)}
-                          className="rounded p-1.5 text-zinc-400 hover:text-white hover:bg-zinc-700 transition-colors"
+                          className="rounded p-1.5 text-ink-2 hover:text-white hover:bg-card-hover transition-colors"
                         >
                           <Pencil className="h-4 w-4" />
                         </button>
                         <button
                           onClick={() => deleteBill(bill)}
-                          className="rounded p-1.5 text-zinc-400 hover:text-red-400 hover:bg-zinc-700 transition-colors"
+                          className="rounded p-1.5 text-ink-2 hover:text-red-400 hover:bg-card-hover transition-colors"
                         >
                           <Trash2 className="h-4 w-4" />
                         </button>
@@ -350,19 +350,19 @@ export default function BillsPage() {
       </div>
 
       {/* Footer summary */}
-      <div className="sticky bottom-0 border-t border-zinc-800 bg-zinc-950 px-6 py-4">
+      <div className="sticky bottom-0 border-t border-rim bg-surface px-6 py-4">
         <div className="flex flex-wrap items-center gap-6 text-sm">
           <div>
-            <span className="text-zinc-500">Total pendente</span>
+            <span className="text-ink-3">Total pendente</span>
             <p className="font-semibold text-red-400">{fmtBRL(totalPending)}</p>
           </div>
           <div>
-            <span className="text-zinc-500">Próximos 7 dias</span>
+            <span className="text-ink-3">Próximos 7 dias</span>
             <p className="font-semibold text-amber-400">{fmtBRL(next7)}</p>
           </div>
           <div>
-            <span className="text-zinc-500">Próximos 30 dias</span>
-            <p className="font-semibold text-zinc-200">{fmtBRL(next30)}</p>
+            <span className="text-ink-3">Próximos 30 dias</span>
+            <p className="font-semibold text-ink">{fmtBRL(next30)}</p>
           </div>
         </div>
       </div>

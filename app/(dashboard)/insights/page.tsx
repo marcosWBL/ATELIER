@@ -144,16 +144,16 @@ export default function InsightsPage() {
   return (
     <div className="p-6 space-y-8">
       <div>
-        <h1 className="text-xl font-bold text-white">Insights</h1>
-        <p className="text-sm text-zinc-500 mt-0.5">Análise do seu negócio com recomendações personalizadas.</p>
+        <h1 className="text-xl font-bold text-ink">Insights</h1>
+        <p className="text-sm text-ink-3 mt-0.5">Análise do seu negócio com recomendações personalizadas.</p>
       </div>
 
-      {loading ? <p className="text-sm text-zinc-500">Analisando dados...</p> : (
+      {loading ? <p className="text-sm text-ink-3">Analisando dados...</p> : (
         <>
           {/* Insights cards */}
           {insights.length > 0 && (
             <section className="space-y-3">
-              <h2 className="text-sm font-medium text-zinc-400">Recomendações</h2>
+              <h2 className="text-sm font-medium text-ink-2">Recomendações</h2>
               <div className="grid gap-3 sm:grid-cols-2">
                 {insights.map((ins, i) => (
                   <div key={i} className={`rounded-xl border p-4 space-y-1.5 ${colorMap[ins.type]}`}>
@@ -170,14 +170,14 @@ export default function InsightsPage() {
 
           {/* Vendas por dia da semana */}
           <section className="space-y-3">
-            <h2 className="text-sm font-medium text-zinc-400">Vendas por dia da semana</h2>
-            <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-4">
+            <h2 className="text-sm font-medium text-ink-2">Vendas por dia da semana</h2>
+            <div className="rounded-xl border border-rim bg-card p-4">
               <div className="flex items-end gap-2 h-28">
                 {salesByDay.map((d) => (
                   <div key={d.day} className="flex-1 flex flex-col items-center gap-1">
-                    <span className="text-[10px] text-zinc-500">{d.count > 0 ? d.count : ""}</span>
+                    <span className="text-[10px] text-ink-3">{d.count > 0 ? d.count : ""}</span>
                     <div className="w-full rounded-t bg-zinc-700 transition-all" style={{ height: `${(d.total / maxDay) * 80}px`, minHeight: d.total > 0 ? 4 : 0, backgroundColor: d.total === Math.max(...salesByDay.map((x) => x.total)) ? "#10b981" : undefined }} />
-                    <span className="text-[10px] text-zinc-500">{d.day}</span>
+                    <span className="text-[10px] text-ink-3">{d.day}</span>
                   </div>
                 ))}
               </div>
@@ -187,16 +187,16 @@ export default function InsightsPage() {
           {/* Pagamentos */}
           {paymentBreakdown.length > 0 && (
             <section className="space-y-3">
-              <h2 className="text-sm font-medium text-zinc-400">Formas de pagamento</h2>
-              <div className="rounded-xl border border-zinc-800 bg-zinc-900 divide-y divide-zinc-800 overflow-hidden">
+              <h2 className="text-sm font-medium text-ink-2">Formas de pagamento</h2>
+              <div className="rounded-xl border border-rim bg-card divide-y divide-rim overflow-hidden">
                 {paymentBreakdown.map((pm) => (
                   <div key={pm.method} className="flex items-center justify-between px-4 py-3 text-sm">
                     <div className="flex items-center gap-2">
-                      <ShoppingBag className="h-3.5 w-3.5 text-zinc-500" />
-                      <span className="text-zinc-300">{pm.method}</span>
-                      <span className="text-zinc-600 text-xs">{pm.count} venda(s)</span>
+                      <ShoppingBag className="h-3.5 w-3.5 text-ink-3" />
+                      <span className="text-ink">{pm.method}</span>
+                      <span className="text-ink-3 text-xs">{pm.count} venda(s)</span>
                     </div>
-                    <span className="font-medium text-white">{fmtBRL(pm.total)}</span>
+                    <span className="font-medium text-ink">{fmtBRL(pm.total)}</span>
                   </div>
                 ))}
               </div>
@@ -206,13 +206,13 @@ export default function InsightsPage() {
           {/* Estoque crítico */}
           {lowStock.length > 0 && (
             <section className="space-y-3">
-              <h2 className="text-sm font-medium text-zinc-400 flex items-center gap-2"><AlertTriangle className="h-4 w-4 text-amber-400" /> Estoque crítico (≤ 3 un.)</h2>
-              <div className="rounded-xl border border-amber-800/30 bg-amber-950/10 divide-y divide-zinc-800 overflow-hidden">
+              <h2 className="text-sm font-medium text-ink-2 flex items-center gap-2"><AlertTriangle className="h-4 w-4 text-amber-400" /> Estoque crítico (≤ 3 un.)</h2>
+              <div className="rounded-xl border border-amber-800/30 bg-amber-950/10 divide-y divide-rim overflow-hidden">
                 {lowStock.map((p) => (
                   <div key={p.name} className="flex items-center justify-between px-4 py-3 text-sm">
                     <div className="flex items-center gap-2">
                       <Package className="h-3.5 w-3.5 text-amber-400" />
-                      <span className="text-zinc-300">{p.name}</span>
+                      <span className="text-ink">{p.name}</span>
                     </div>
                     <span className={`font-medium ${p.qty === 0 ? "text-red-400" : "text-amber-400"}`}>{p.qty} un.</span>
                   </div>
@@ -224,17 +224,17 @@ export default function InsightsPage() {
           {/* Produto ranking */}
           {productRanking.length > 0 && (
             <section className="space-y-3">
-              <h2 className="text-sm font-medium text-zinc-400">Todos os produtos — ranking de vendas</h2>
-              <div className="rounded-xl border border-zinc-800 bg-zinc-900 divide-y divide-zinc-800 overflow-hidden">
+              <h2 className="text-sm font-medium text-ink-2">Todos os produtos — ranking de vendas</h2>
+              <div className="rounded-xl border border-rim bg-card divide-y divide-rim overflow-hidden">
                 {productRanking.map((p, i) => (
                   <div key={p.name} className="flex items-center justify-between px-4 py-3 text-sm">
                     <div className="flex items-center gap-3">
-                      <span className="text-zinc-600 w-5 text-right">{i + 1}</span>
-                      <span className="text-zinc-300">{p.name}</span>
+                      <span className="text-ink-3 w-5 text-right">{i + 1}</span>
+                      <span className="text-ink">{p.name}</span>
                     </div>
                     <div className="flex items-center gap-4">
-                      <span className="text-zinc-500 text-xs">{p.qty} un.</span>
-                      <span className="font-medium text-white">{fmtBRL(p.revenue)}</span>
+                      <span className="text-ink-3 text-xs">{p.qty} un.</span>
+                      <span className="font-medium text-ink">{fmtBRL(p.revenue)}</span>
                       {i === 0 && <TrendingUp className="h-3.5 w-3.5 text-emerald-400" />}
                       {i === productRanking.length - 1 && productRanking.length > 1 && <TrendingDown className="h-3.5 w-3.5 text-red-400" />}
                     </div>
@@ -247,20 +247,20 @@ export default function InsightsPage() {
           {/* Customer ranking */}
           {customerRanking.length > 0 && (
             <section className="space-y-3">
-              <h2 className="text-sm font-medium text-zinc-400">Todos os clientes — ranking por valor</h2>
-              <div className="rounded-xl border border-zinc-800 bg-zinc-900 divide-y divide-zinc-800 overflow-hidden">
+              <h2 className="text-sm font-medium text-ink-2">Todos os clientes — ranking por valor</h2>
+              <div className="rounded-xl border border-rim bg-card divide-y divide-rim overflow-hidden">
                 {customerRanking.map((c, i) => (
                   <div key={c.name} className="flex items-center justify-between px-4 py-3 text-sm">
                     <div className="flex items-center gap-3">
-                      <span className="text-zinc-600 w-5 text-right">{i + 1}</span>
-                      <Users className="h-3.5 w-3.5 text-zinc-500" />
-                      <span className="text-zinc-300">
+                      <span className="text-ink-3 w-5 text-right">{i + 1}</span>
+                      <Users className="h-3.5 w-3.5 text-ink-3" />
+                      <span className="text-ink">
                         {c.vip && <Star className="inline h-3 w-3 text-amber-400 mr-1" />}
                         {c.name}
                       </span>
-                      <span className="text-zinc-600 text-xs">{c.orders} pedido(s)</span>
+                      <span className="text-ink-3 text-xs">{c.orders} pedido(s)</span>
                     </div>
-                    <span className="font-medium text-white">{fmtBRL(c.total)}</span>
+                    <span className="font-medium text-ink">{fmtBRL(c.total)}</span>
                   </div>
                 ))}
               </div>

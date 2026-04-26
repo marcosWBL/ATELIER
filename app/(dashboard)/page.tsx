@@ -169,28 +169,28 @@ export default function DashboardPage() {
       {/* KPIs */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         {kpis.map((k) => (
-          <div key={k.label} className="rounded-xl border border-zinc-800 bg-zinc-900 p-4 space-y-1">
-            <p className="text-xs text-zinc-500">{k.label}</p>
+          <div key={k.label} className="rounded-xl border border-rim bg-card p-4 space-y-1">
+            <p className="text-xs text-ink-3">{k.label}</p>
             <div className="flex items-center gap-2">
-              <p className="text-lg font-semibold text-white">{k.value}</p>
+              <p className="text-lg font-semibold text-ink">{k.value}</p>
               {k.trend === "up" && <TrendingUp className="h-4 w-4 text-emerald-400" />}
               {k.trend === "down" && <TrendingDown className="h-4 w-4 text-red-400" />}
             </div>
-            {k.sub && <p className="text-xs text-zinc-600">{k.sub}</p>}
+            {k.sub && <p className="text-xs text-ink-3">{k.sub}</p>}
           </div>
         ))}
       </div>
 
       {/* Meta mensal */}
-      <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-5 space-y-3">
+      <div className="rounded-xl border border-rim bg-card p-5 space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Target className="h-4 w-4 text-zinc-400" />
-            <span className="text-sm font-medium text-zinc-300">Meta mensal</span>
+            <Target className="h-4 w-4 text-ink-2" />
+            <span className="text-sm font-medium text-ink">Meta mensal</span>
           </div>
           {editingGoal ? (
             <div className="flex items-center gap-2">
-              <span className="text-xs text-zinc-500">R$</span>
+              <span className="text-xs text-ink-3">R$</span>
               <input
                 type="number"
                 min={0}
@@ -198,14 +198,14 @@ export default function DashboardPage() {
                 onChange={(e) => setGoalInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && saveGoal()}
                 autoFocus
-                className="w-32 rounded border border-zinc-600 bg-zinc-800 px-2 py-1 text-sm text-white focus:outline-none focus:ring-1 focus:ring-zinc-500"
+                className="w-32 rounded border border-rim-2 bg-card-hover px-2 py-1 text-sm text-ink focus:outline-none focus:ring-1 focus:ring-zinc-500"
               />
-              <button onClick={saveGoal} className="rounded p-1 text-emerald-400 hover:bg-zinc-800">
+              <button onClick={saveGoal} className="rounded p-1 text-emerald-400 hover:bg-card-hover">
                 <Check className="h-4 w-4" />
               </button>
             </div>
           ) : (
-            <button onClick={() => setEditingGoal(true)} className="flex items-center gap-1 text-xs text-zinc-500 hover:text-zinc-300 transition-colors">
+            <button onClick={() => setEditingGoal(true)} className="flex items-center gap-1 text-xs text-ink-3 hover:text-ink transition-colors">
               <Pencil className="h-3 w-3" />
               {monthlyGoal > 0 ? fmtBRL(monthlyGoal) : "Definir meta"}
             </button>
@@ -214,26 +214,26 @@ export default function DashboardPage() {
 
         {monthlyGoal > 0 ? (
           <>
-            <div className="h-2.5 w-full rounded-full bg-zinc-800">
+            <div className="h-2.5 w-full rounded-full bg-card-hover">
               <div
                 className={`h-2.5 rounded-full transition-all ${goalPercent >= 100 ? "bg-emerald-400" : goalPercent >= 70 ? "bg-amber-400" : "bg-zinc-400"}`}
                 style={{ width: `${goalPercent}%` }}
               />
             </div>
-            <div className="flex justify-between text-xs text-zinc-500">
+            <div className="flex justify-between text-xs text-ink-3">
               <span>{fmtBRL(currentRevenue)} arrecadados</span>
-              <span className={goalPercent >= 100 ? "text-emerald-400" : "text-zinc-400"}>{goalPercent.toFixed(1)}% da meta</span>
+              <span className={goalPercent >= 100 ? "text-emerald-400" : "text-ink-2"}>{goalPercent.toFixed(1)}% da meta</span>
             </div>
           </>
         ) : (
-          <p className="text-xs text-zinc-600">Clique em "Definir meta" para acompanhar seu progresso mensal.</p>
+          <p className="text-xs text-ink-3">Clique em "Definir meta" para acompanhar seu progresso mensal.</p>
         )}
       </div>
 
       {/* Charts */}
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-4">
-          <p className="mb-4 text-sm font-medium text-zinc-300">Vendas — últimos 7 dias</p>
+        <div className="rounded-xl border border-rim bg-card p-4">
+          <p className="mb-4 text-sm font-medium text-ink">Vendas — últimos 7 dias</p>
           <ResponsiveContainer width="100%" height={200}>
             <LineChart data={lineData}>
               <XAxis dataKey="day" tick={{ fontSize: 11, fill: "#71717a" }} />
@@ -244,8 +244,8 @@ export default function DashboardPage() {
           </ResponsiveContainer>
         </div>
 
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-4">
-          <p className="mb-4 text-sm font-medium text-zinc-300">Receita vs Despesas (mês)</p>
+        <div className="rounded-xl border border-rim bg-card p-4">
+          <p className="mb-4 text-sm font-medium text-ink">Receita vs Despesas (mês)</p>
           <ResponsiveContainer width="100%" height={200}>
             <PieChart>
               <Pie data={pieData} cx="50%" cy="50%" innerRadius={50} outerRadius={80} dataKey="value"
@@ -261,10 +261,10 @@ export default function DashboardPage() {
 
       {/* Rankings */}
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-4">
-          <p className="mb-3 text-sm font-medium text-zinc-300">Ranking de produtos vendidos</p>
+        <div className="rounded-xl border border-rim bg-card p-4">
+          <p className="mb-3 text-sm font-medium text-ink">Ranking de produtos vendidos</p>
           {productRanking.length === 0 ? (
-            <p className="text-sm text-zinc-600 py-4 text-center">Nenhuma venda registrada.</p>
+            <p className="text-sm text-ink-3 py-4 text-center">Nenhuma venda registrada.</p>
           ) : (
             <div className="space-y-2 max-h-72 overflow-y-auto pr-1">
               {productRanking.map((p, i) => {
@@ -273,10 +273,10 @@ export default function DashboardPage() {
                 return (
                   <div key={p.name} className="space-y-0.5">
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-zinc-400"><span className="text-zinc-600 mr-1.5">{i + 1}.</span>{p.name}</span>
-                      <span className="text-zinc-200 font-medium">{p.qty} un.</span>
+                      <span className="text-ink-2"><span className="text-ink-3 mr-1.5">{i + 1}.</span>{p.name}</span>
+                      <span className="text-ink font-medium">{p.qty} un.</span>
                     </div>
-                    <div className="h-1 w-full rounded-full bg-zinc-800">
+                    <div className="h-1 w-full rounded-full bg-card-hover">
                       <div className="h-1 rounded-full bg-emerald-500/60" style={{ width: `${pct}%` }} />
                     </div>
                   </div>
@@ -286,10 +286,10 @@ export default function DashboardPage() {
           )}
         </div>
 
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-4">
-          <p className="mb-3 text-sm font-medium text-zinc-300">Ranking de clientes por valor</p>
+        <div className="rounded-xl border border-rim bg-card p-4">
+          <p className="mb-3 text-sm font-medium text-ink">Ranking de clientes por valor</p>
           {customerRanking.length === 0 ? (
-            <p className="text-sm text-zinc-600 py-4 text-center">Nenhuma venda com cliente.</p>
+            <p className="text-sm text-ink-3 py-4 text-center">Nenhuma venda com cliente.</p>
           ) : (
             <div className="space-y-2 max-h-72 overflow-y-auto pr-1">
               {customerRanking.map((c, i) => {
@@ -298,10 +298,10 @@ export default function DashboardPage() {
                 return (
                   <div key={c.name} className="space-y-0.5">
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-zinc-400"><span className="text-zinc-600 mr-1.5">{i + 1}.</span>{c.name}</span>
-                      <span className="text-zinc-200 font-medium">{fmtBRL(c.total)}</span>
+                      <span className="text-ink-2"><span className="text-ink-3 mr-1.5">{i + 1}.</span>{c.name}</span>
+                      <span className="text-ink font-medium">{fmtBRL(c.total)}</span>
                     </div>
-                    <div className="h-1 w-full rounded-full bg-zinc-800">
+                    <div className="h-1 w-full rounded-full bg-card-hover">
                       <div className="h-1 rounded-full bg-blue-500/60" style={{ width: `${pct}%` }} />
                     </div>
                   </div>

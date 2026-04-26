@@ -3,7 +3,31 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --surface: 255 255 255;
+    --card: 244 244 245;
+    --card-hover: 228 228 231;
+    --form-bg: 255 255 255;
+    --ink: 24 24 27;
+    --ink-2: 82 82 91;
+    --ink-3: 161 161 170;
+    --rim: 228 228 231;
+    --rim-2: 212 212 216;
+  }
+
+  .dark {
+    --surface: 9 9 11;
+    --card: 24 24 27;
+    --card-hover: 39 39 42;
+    --form-bg: 39 39 42;
+    --ink: 250 250 250;
+    --ink-2: 161 161 170;
+    --ink-3: 113 113 122;
+    --rim: 39 39 42;
+    --rim-2: 63 63 70;
+  }
+
   body {
-    @apply bg-zinc-950 text-zinc-100;
+    @apply bg-surface text-ink transition-colors duration-200;
   }
 }

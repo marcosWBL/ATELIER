@@ -63,25 +63,25 @@ export default function SettingsPage() {
   return (
     <div className="flex flex-col min-h-[calc(100vh-4rem)]">
       <div className="flex-1 p-6 space-y-8 max-w-2xl">
-        <h1 className="text-xl font-bold text-foreground">Configurações</h1>
+        <h1 className="text-xl font-bold text-ink">Configurações</h1>
 
         {/* Atalhos de teclado */}
         <section className="space-y-4">
           <div className="flex items-center gap-2">
-            <Keyboard className="h-4 w-4 text-zinc-400" />
-            <h2 className="text-sm font-semibold text-zinc-300">Atalhos de teclado</h2>
+            <Keyboard className="h-4 w-4 text-ink-2" />
+            <h2 className="text-sm font-semibold text-ink">Atalhos de teclado</h2>
           </div>
-          <div className="rounded-xl border border-zinc-800 divide-y divide-zinc-800 overflow-hidden">
+          <div className="rounded-xl border border-rim divide-y divide-rim overflow-hidden">
             {SHORTCUTS.map(({ key, description }) => (
-              <div key={key} className="flex items-center justify-between bg-zinc-900 px-4 py-3">
-                <span className="text-sm text-zinc-300">{description}</span>
-                <kbd className="inline-flex items-center rounded border border-zinc-600 bg-zinc-800 px-2 py-0.5 font-mono text-xs text-zinc-300 shadow-sm">
+              <div key={key} className="flex items-center justify-between bg-card px-4 py-3">
+                <span className="text-sm text-ink">{description}</span>
+                <kbd className="inline-flex items-center rounded border border-rim-2 bg-card-hover px-2 py-0.5 font-mono text-xs text-ink shadow-sm">
                   {key}
                 </kbd>
               </div>
             ))}
           </div>
-          <p className="text-xs text-zinc-500">
+          <p className="text-xs text-ink-3">
             Os atalhos funcionam quando nenhum campo de texto está em foco.
           </p>
         </section>
@@ -115,10 +115,10 @@ export default function SettingsPage() {
       </div>
 
       {/* Rodapé */}
-      <footer className="border-t border-zinc-800 px-6 py-4">
-        <p className="text-xs text-zinc-500">
+      <footer className="border-t border-rim px-6 py-4">
+        <p className="text-xs text-ink-3">
           atelier. v2.0{profile && (
-            <> — Logado como <span className="text-zinc-400">{profile.store_name}</span> ({profile.email})</>
+            <> — Logado como <span className="text-ink-2">{profile.store_name}</span> ({profile.email})</>
           )}
         </p>
       </footer>

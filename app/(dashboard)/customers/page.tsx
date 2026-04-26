@@ -51,37 +51,37 @@ function CustomerModal({ initial, onClose, onSaved }: { initial?: Customer; onCl
 
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/70 px-4">
-      <div className="w-full max-w-lg rounded-xl bg-zinc-900 border border-zinc-800 shadow-2xl max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-800">
-          <h2 className="text-base font-semibold text-white">{initial ? "Editar cliente" : "Novo cliente"}</h2>
-          <button onClick={onClose}><X className="h-5 w-5 text-zinc-400 hover:text-white" /></button>
+      <div className="w-full max-w-lg rounded-xl bg-card border border-rim shadow-2xl max-h-[90vh] overflow-y-auto">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-rim">
+          <h2 className="text-base font-semibold text-ink">{initial ? "Editar cliente" : "Novo cliente"}</h2>
+          <button onClick={onClose}><X className="h-5 w-5 text-ink-2 hover:text-white" /></button>
         </div>
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div className="space-y-1">
-            <label className="text-xs text-zinc-400">Nome *</label>
-            <input type="text" required value={form.name} onChange={(e) => set("name", e.target.value)} className="w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-sm text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500" placeholder="Nome completo" />
+            <label className="text-xs text-ink-2">Nome *</label>
+            <input type="text" required value={form.name} onChange={(e) => set("name", e.target.value)} className="w-full rounded-md border border-rim-2 bg-card-hover px-3 py-2 text-sm text-ink placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500" placeholder="Nome completo" />
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1">
-              <label className="text-xs text-zinc-400">E-mail</label>
-              <input type="email" value={form.email} onChange={(e) => set("email", e.target.value)} className="w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-sm text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500" placeholder="email@exemplo.com" />
+              <label className="text-xs text-ink-2">E-mail</label>
+              <input type="email" value={form.email} onChange={(e) => set("email", e.target.value)} className="w-full rounded-md border border-rim-2 bg-card-hover px-3 py-2 text-sm text-ink placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500" placeholder="email@exemplo.com" />
             </div>
             <div className="space-y-1">
-              <label className="text-xs text-zinc-400">Telefone</label>
-              <input type="tel" value={form.phone} onChange={(e) => set("phone", e.target.value)} className="w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-sm text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500" placeholder="(00) 00000-0000" />
+              <label className="text-xs text-ink-2">Telefone</label>
+              <input type="tel" value={form.phone} onChange={(e) => set("phone", e.target.value)} className="w-full rounded-md border border-rim-2 bg-card-hover px-3 py-2 text-sm text-ink placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500" placeholder="(00) 00000-0000" />
             </div>
           </div>
           <div className="space-y-1">
-            <label className="text-xs text-zinc-400">Aniversário</label>
-            <input type="date" value={form.birthday} onChange={(e) => set("birthday", e.target.value)} className="w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-zinc-500" />
+            <label className="text-xs text-ink-2">Aniversário</label>
+            <input type="date" value={form.birthday} onChange={(e) => set("birthday", e.target.value)} className="w-full rounded-md border border-rim-2 bg-card-hover px-3 py-2 text-sm text-ink focus:outline-none focus:ring-2 focus:ring-zinc-500" />
           </div>
           <div className="space-y-1">
-            <label className="text-xs text-zinc-400">Observações</label>
-            <textarea rows={3} value={form.notes} onChange={(e) => set("notes", e.target.value)} className="w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-sm text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500 resize-none" placeholder="Preferências, histórico..." />
+            <label className="text-xs text-ink-2">Observações</label>
+            <textarea rows={3} value={form.notes} onChange={(e) => set("notes", e.target.value)} className="w-full rounded-md border border-rim-2 bg-card-hover px-3 py-2 text-sm text-ink placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500 resize-none" placeholder="Preferências, histórico..." />
           </div>
           <label className="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" checked={form.vip} onChange={(e) => set("vip", e.target.checked)} className="rounded border-zinc-600 bg-zinc-800" />
-            <span className="text-sm text-zinc-300 flex items-center gap-1"><Star className="h-3.5 w-3.5 text-amber-400" /> Cliente VIP</span>
+            <input type="checkbox" checked={form.vip} onChange={(e) => set("vip", e.target.checked)} className="rounded border-rim-2 bg-card-hover" />
+            <span className="text-sm text-ink flex items-center gap-1"><Star className="h-3.5 w-3.5 text-amber-400" /> Cliente VIP</span>
           </label>
           {error && <p className="text-sm text-red-400">{error}</p>}
           <button type="submit" disabled={loading} className="w-full rounded-md bg-white py-2 text-sm font-semibold text-black hover:bg-zinc-200 disabled:opacity-50 transition-colors">
@@ -131,57 +131,57 @@ export default function CustomersPage() {
     <div className="flex flex-col min-h-[calc(100vh-4rem)]">
       <div className="flex-1 p-6 space-y-6">
         <div className="flex items-center justify-between">
-          <h1 className="text-xl font-bold text-white">Clientes</h1>
+          <h1 className="text-xl font-bold text-ink">Clientes</h1>
           <button onClick={() => { setEditing(undefined); setShowModal(true); }} className="flex items-center gap-2 rounded-lg bg-white px-3 py-2 text-sm font-semibold text-black hover:bg-zinc-200 transition-colors">
             <Plus className="h-4 w-4" /> Novo cliente
           </button>
         </div>
 
         <div className="grid grid-cols-3 gap-4">
-          <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-4">
-            <p className="text-xs text-zinc-400">Total</p>
-            <p className="text-2xl font-bold text-white mt-1">{customers.length}</p>
+          <div className="rounded-xl border border-rim bg-card p-4">
+            <p className="text-xs text-ink-2">Total</p>
+            <p className="text-2xl font-bold text-ink mt-1">{customers.length}</p>
           </div>
-          <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-4">
-            <p className="text-xs text-zinc-400">VIP</p>
+          <div className="rounded-xl border border-rim bg-card p-4">
+            <p className="text-xs text-ink-2">VIP</p>
             <p className="text-2xl font-bold text-amber-400 mt-1">{vipCount}</p>
           </div>
-          <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-4">
-            <p className="text-xs text-zinc-400">Aniversário no mês</p>
+          <div className="rounded-xl border border-rim bg-card p-4">
+            <p className="text-xs text-ink-2">Aniversário no mês</p>
             <p className="text-2xl font-bold text-pink-400 mt-1">{birthdayCount}</p>
           </div>
         </div>
 
-        {loading ? <p className="text-sm text-zinc-500">Carregando...</p> : customers.length === 0 ? <Empty message="Nenhum cliente cadastrado." /> : (
-          <div className="rounded-xl border border-zinc-800 overflow-hidden">
+        {loading ? <p className="text-sm text-ink-3">Carregando...</p> : customers.length === 0 ? <Empty message="Nenhum cliente cadastrado." /> : (
+          <div className="rounded-xl border border-rim overflow-hidden">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-zinc-800 bg-zinc-900/50">
-                  <th className="px-4 py-3 text-left text-xs text-zinc-400 font-medium">Nome</th>
-                  <th className="px-4 py-3 text-left text-xs text-zinc-400 font-medium">Contato</th>
-                  <th className="px-4 py-3 text-left text-xs text-zinc-400 font-medium">Aniversário</th>
-                  <th className="px-4 py-3 text-center text-xs text-zinc-400 font-medium">VIP</th>
-                  <th className="px-4 py-3 text-right text-xs text-zinc-400 font-medium">Ações</th>
+                <tr className="border-b border-rim bg-card/50">
+                  <th className="px-4 py-3 text-left text-xs text-ink-2 font-medium">Nome</th>
+                  <th className="px-4 py-3 text-left text-xs text-ink-2 font-medium">Contato</th>
+                  <th className="px-4 py-3 text-left text-xs text-ink-2 font-medium">Aniversário</th>
+                  <th className="px-4 py-3 text-center text-xs text-ink-2 font-medium">VIP</th>
+                  <th className="px-4 py-3 text-right text-xs text-ink-2 font-medium">Ações</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-zinc-800">
+              <tbody className="divide-y divide-rim">
                 {customers.map((c) => (
-                  <tr key={c.id} className="bg-zinc-900 hover:bg-zinc-800/50 transition-colors">
-                    <td className="px-4 py-3 text-zinc-200 font-medium">
+                  <tr key={c.id} className="bg-card hover:bg-card-hover/50 transition-colors">
+                    <td className="px-4 py-3 text-ink font-medium">
                       {c.vip && <Star className="inline h-3 w-3 text-amber-400 mr-1" />}
                       {c.name}
-                      {c.notes && <p className="text-xs text-zinc-500 mt-0.5 truncate max-w-[160px]">{c.notes}</p>}
+                      {c.notes && <p className="text-xs text-ink-3 mt-0.5 truncate max-w-[160px]">{c.notes}</p>}
                     </td>
-                    <td className="px-4 py-3 text-zinc-400">
+                    <td className="px-4 py-3 text-ink-2">
                       <p>{c.email || "—"}</p>
                       <p className="text-xs">{c.phone}</p>
                     </td>
-                    <td className="px-4 py-3 text-zinc-400">{c.birthday || "—"}</td>
-                    <td className="px-4 py-3 text-center">{c.vip ? <Star className="inline h-4 w-4 text-amber-400" /> : <span className="text-zinc-600">—</span>}</td>
+                    <td className="px-4 py-3 text-ink-2">{c.birthday || "—"}</td>
+                    <td className="px-4 py-3 text-center">{c.vip ? <Star className="inline h-4 w-4 text-amber-400" /> : <span className="text-ink-3">—</span>}</td>
                     <td className="px-4 py-3 text-right">
                       <div className="flex items-center justify-end gap-1">
-                        <button onClick={() => { setEditing(c); setShowModal(true); }} className="rounded p-1.5 text-zinc-400 hover:text-white hover:bg-zinc-700 transition-colors"><Pencil className="h-4 w-4" /></button>
-                        <button onClick={() => deleteCustomer(c)} className="rounded p-1.5 text-zinc-400 hover:text-red-400 hover:bg-zinc-700 transition-colors"><Trash2 className="h-4 w-4" /></button>
+                        <button onClick={() => { setEditing(c); setShowModal(true); }} className="rounded p-1.5 text-ink-2 hover:text-white hover:bg-card-hover transition-colors"><Pencil className="h-4 w-4" /></button>
+                        <button onClick={() => deleteCustomer(c)} className="rounded p-1.5 text-ink-2 hover:text-red-400 hover:bg-card-hover transition-colors"><Trash2 className="h-4 w-4" /></button>
                       </div>
                     </td>
                   </tr>

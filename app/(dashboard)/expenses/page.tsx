@@ -50,35 +50,35 @@ function ExpenseModal({ initial, onClose, onSaved }: { initial?: Expense; onClos
 
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/70 px-4">
-      <div className="w-full max-w-lg rounded-xl bg-zinc-900 border border-zinc-800 shadow-2xl">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-800">
-          <h2 className="text-base font-semibold text-white">{initial ? "Editar despesa" : "Nova despesa"}</h2>
-          <button onClick={onClose}><X className="h-5 w-5 text-zinc-400 hover:text-white" /></button>
+      <div className="w-full max-w-lg rounded-xl bg-card border border-rim shadow-2xl">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-rim">
+          <h2 className="text-base font-semibold text-ink">{initial ? "Editar despesa" : "Nova despesa"}</h2>
+          <button onClick={onClose}><X className="h-5 w-5 text-ink-2 hover:text-white" /></button>
         </div>
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div className="space-y-1">
-            <label className="text-xs text-zinc-400">Descrição *</label>
-            <input type="text" required value={form.description} onChange={(e) => set("description", e.target.value)} className="w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-sm text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500" placeholder="Ex: Compra de tecidos" />
+            <label className="text-xs text-ink-2">Descrição *</label>
+            <input type="text" required value={form.description} onChange={(e) => set("description", e.target.value)} className="w-full rounded-md border border-rim-2 bg-card-hover px-3 py-2 text-sm text-ink placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500" placeholder="Ex: Compra de tecidos" />
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1">
-              <label className="text-xs text-zinc-400">Valor *</label>
-              <input type="number" min={0.01} step="0.01" required value={form.amount || ""} onChange={(e) => set("amount", Number(e.target.value))} className="w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-zinc-500" placeholder="0,00" />
+              <label className="text-xs text-ink-2">Valor *</label>
+              <input type="number" min={0.01} step="0.01" required value={form.amount || ""} onChange={(e) => set("amount", Number(e.target.value))} className="w-full rounded-md border border-rim-2 bg-card-hover px-3 py-2 text-sm text-ink focus:outline-none focus:ring-2 focus:ring-zinc-500" placeholder="0,00" />
             </div>
             <div className="space-y-1">
-              <label className="text-xs text-zinc-400">Data *</label>
-              <input type="date" required value={form.date} onChange={(e) => set("date", e.target.value)} className="w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-zinc-500" />
+              <label className="text-xs text-ink-2">Data *</label>
+              <input type="date" required value={form.date} onChange={(e) => set("date", e.target.value)} className="w-full rounded-md border border-rim-2 bg-card-hover px-3 py-2 text-sm text-ink focus:outline-none focus:ring-2 focus:ring-zinc-500" />
             </div>
           </div>
           <div className="space-y-1">
-            <label className="text-xs text-zinc-400">Categoria</label>
-            <select value={form.category} onChange={(e) => set("category", e.target.value)} className="w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-sm text-white">
+            <label className="text-xs text-ink-2">Categoria</label>
+            <select value={form.category} onChange={(e) => set("category", e.target.value)} className="w-full rounded-md border border-rim-2 bg-card-hover px-3 py-2 text-sm text-ink">
               {CATEGORIES.map((c) => <option key={c}>{c}</option>)}
             </select>
           </div>
           <div className="space-y-1">
-            <label className="text-xs text-zinc-400">Observações</label>
-            <textarea rows={2} value={form.notes} onChange={(e) => set("notes", e.target.value)} className="w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-sm text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500 resize-none" placeholder="Detalhes opcionais..." />
+            <label className="text-xs text-ink-2">Observações</label>
+            <textarea rows={2} value={form.notes} onChange={(e) => set("notes", e.target.value)} className="w-full rounded-md border border-rim-2 bg-card-hover px-3 py-2 text-sm text-ink placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500 resize-none" placeholder="Detalhes opcionais..." />
           </div>
           {error && <p className="text-sm text-red-400">{error}</p>}
           <button type="submit" disabled={loading} className="w-full rounded-md bg-white py-2 text-sm font-semibold text-black hover:bg-zinc-200 disabled:opacity-50 transition-colors">
@@ -139,9 +139,9 @@ export default function ExpensesPage() {
     <div className="flex flex-col min-h-[calc(100vh-4rem)]">
       <div className="flex-1 p-6 space-y-6">
         <div className="flex items-center justify-between">
-          <h1 className="text-xl font-bold text-white">Despesas</h1>
+          <h1 className="text-xl font-bold text-ink">Despesas</h1>
           <div className="flex gap-2">
-            <button onClick={exportCSV} className="flex items-center gap-2 rounded-lg border border-zinc-700 px-3 py-2 text-sm text-zinc-300 hover:bg-zinc-800 transition-colors">
+            <button onClick={exportCSV} className="flex items-center gap-2 rounded-lg border border-rim-2 px-3 py-2 text-sm text-ink hover:bg-card-hover transition-colors">
               <Download className="h-4 w-4" /> CSV
             </button>
             <button onClick={() => { setEditing(undefined); setShowModal(true); }} className="flex items-center gap-2 rounded-lg bg-white px-3 py-2 text-sm font-semibold text-black hover:bg-zinc-200 transition-colors">
@@ -151,42 +151,42 @@ export default function ExpensesPage() {
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-4">
-            <p className="text-xs text-zinc-400">Despesas do mês</p>
+          <div className="rounded-xl border border-rim bg-card p-4">
+            <p className="text-xs text-ink-2">Despesas do mês</p>
             <p className="text-2xl font-bold text-red-400 mt-1">{fmtBRL(totalMonth)}</p>
           </div>
-          <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-4">
-            <p className="text-xs text-zinc-400">Total geral</p>
-            <p className="text-2xl font-bold text-white mt-1">{fmtBRL(totalAll)}</p>
+          <div className="rounded-xl border border-rim bg-card p-4">
+            <p className="text-xs text-ink-2">Total geral</p>
+            <p className="text-2xl font-bold text-ink mt-1">{fmtBRL(totalAll)}</p>
           </div>
         </div>
 
-        {loading ? <p className="text-sm text-zinc-500">Carregando...</p> : expenses.length === 0 ? <Empty message="Nenhuma despesa registrada." /> : (
-          <div className="rounded-xl border border-zinc-800 overflow-hidden">
+        {loading ? <p className="text-sm text-ink-3">Carregando...</p> : expenses.length === 0 ? <Empty message="Nenhuma despesa registrada." /> : (
+          <div className="rounded-xl border border-rim overflow-hidden">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-zinc-800 bg-zinc-900/50">
-                  <th className="px-4 py-3 text-left text-xs text-zinc-400 font-medium">Descrição</th>
-                  <th className="px-4 py-3 text-left text-xs text-zinc-400 font-medium">Categoria</th>
-                  <th className="px-4 py-3 text-left text-xs text-zinc-400 font-medium">Data</th>
-                  <th className="px-4 py-3 text-right text-xs text-zinc-400 font-medium">Valor</th>
-                  <th className="px-4 py-3 text-right text-xs text-zinc-400 font-medium">Ações</th>
+                <tr className="border-b border-rim bg-card/50">
+                  <th className="px-4 py-3 text-left text-xs text-ink-2 font-medium">Descrição</th>
+                  <th className="px-4 py-3 text-left text-xs text-ink-2 font-medium">Categoria</th>
+                  <th className="px-4 py-3 text-left text-xs text-ink-2 font-medium">Data</th>
+                  <th className="px-4 py-3 text-right text-xs text-ink-2 font-medium">Valor</th>
+                  <th className="px-4 py-3 text-right text-xs text-ink-2 font-medium">Ações</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-zinc-800">
+              <tbody className="divide-y divide-rim">
                 {expenses.map((ex) => (
-                  <tr key={ex.id} className="bg-zinc-900 hover:bg-zinc-800/50 transition-colors">
-                    <td className="px-4 py-3 text-zinc-200 font-medium">
+                  <tr key={ex.id} className="bg-card hover:bg-card-hover/50 transition-colors">
+                    <td className="px-4 py-3 text-ink font-medium">
                       {ex.description}
-                      {ex.notes && <p className="text-xs text-zinc-500 mt-0.5 truncate max-w-[180px]">{ex.notes}</p>}
+                      {ex.notes && <p className="text-xs text-ink-3 mt-0.5 truncate max-w-[180px]">{ex.notes}</p>}
                     </td>
-                    <td className="px-4 py-3 text-zinc-400">{ex.category}</td>
-                    <td className="px-4 py-3 text-zinc-400">{ex.date}</td>
+                    <td className="px-4 py-3 text-ink-2">{ex.category}</td>
+                    <td className="px-4 py-3 text-ink-2">{ex.date}</td>
                     <td className="px-4 py-3 text-right font-medium text-red-400">{fmtBRL(ex.amount)}</td>
                     <td className="px-4 py-3 text-right">
                       <div className="flex items-center justify-end gap-1">
-                        <button onClick={() => { setEditing(ex); setShowModal(true); }} className="rounded p-1.5 text-zinc-400 hover:text-white hover:bg-zinc-700 transition-colors"><Pencil className="h-4 w-4" /></button>
-                        <button onClick={() => deleteExpense(ex)} className="rounded p-1.5 text-zinc-400 hover:text-red-400 hover:bg-zinc-700 transition-colors"><Trash2 className="h-4 w-4" /></button>
+                        <button onClick={() => { setEditing(ex); setShowModal(true); }} className="rounded p-1.5 text-ink-2 hover:text-white hover:bg-card-hover transition-colors"><Pencil className="h-4 w-4" /></button>
+                        <button onClick={() => deleteExpense(ex)} className="rounded p-1.5 text-ink-2 hover:text-red-400 hover:bg-card-hover transition-colors"><Trash2 className="h-4 w-4" /></button>
                       </div>
                     </td>
                   </tr>

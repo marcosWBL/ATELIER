@@ -87,7 +87,7 @@ function CouponModal({ sale, onClose }: { sale: Sale; onClose: () => void }) {
           <p className="text-center text-xs text-stone-400">Obrigado pela preferência!</p>
         </div>
         <div className="flex gap-2 px-6 pb-5">
-          <button onClick={handlePrint} className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-zinc-900 py-2 text-sm font-medium text-white hover:bg-zinc-700">
+          <button onClick={handlePrint} className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-card py-2 text-sm font-medium text-ink hover:bg-card-hover">
             <Printer className="h-4 w-4" /> Imprimir
           </button>
           <button onClick={onClose} className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-zinc-300 py-2 text-sm font-medium text-zinc-700 hover:bg-zinc-50">
@@ -221,20 +221,20 @@ function SaleFormModal({
 
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/70 px-4">
-      <div className="w-full max-w-lg rounded-xl bg-zinc-900 border border-zinc-800 shadow-2xl max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-800">
-          <h2 className="text-base font-semibold text-foreground">Nova venda</h2>
-          <button onClick={onClose}><X className="h-5 w-5 text-zinc-400 hover:text-white" /></button>
+      <div className="w-full max-w-lg rounded-xl bg-card border border-rim shadow-2xl max-h-[90vh] overflow-y-auto">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-rim">
+          <h2 className="text-base font-semibold text-ink">Nova venda</h2>
+          <button onClick={onClose}><X className="h-5 w-5 text-ink-2 hover:text-white" /></button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {/* Customer */}
           <div className="space-y-1">
-            <label className="text-xs text-zinc-400">Cliente</label>
+            <label className="text-xs text-ink-2">Cliente</label>
             <select
               value={customerId}
               onChange={(e) => setCustomerId(e.target.value)}
-              className="w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-sm text-foreground"
+              className="w-full rounded-md border border-rim-2 bg-card-hover px-3 py-2 text-sm text-ink"
             >
               <option value="">Sem cliente</option>
               {customers.map((c) => (
@@ -248,33 +248,33 @@ function SaleFormModal({
           {/* Payment + Date */}
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1">
-              <label className="text-xs text-zinc-400">Pagamento</label>
+              <label className="text-xs text-ink-2">Pagamento</label>
               <select
                 value={payment}
                 onChange={(e) => setPayment(e.target.value)}
-                className="w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-sm text-foreground"
+                className="w-full rounded-md border border-rim-2 bg-card-hover px-3 py-2 text-sm text-ink"
               >
                 {PAYMENT_METHODS.map((m) => <option key={m}>{m}</option>)}
               </select>
             </div>
             <div className="space-y-1">
-              <label className="text-xs text-zinc-400">Data</label>
+              <label className="text-xs text-ink-2">Data</label>
               <input
                 type="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
-                className="w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-sm text-foreground"
+                className="w-full rounded-md border border-rim-2 bg-card-hover px-3 py-2 text-sm text-ink"
               />
             </div>
           </div>
 
           {/* Add product */}
           <div className="space-y-1">
-            <label className="text-xs text-zinc-400">Adicionar produto</label>
+            <label className="text-xs text-ink-2">Adicionar produto</label>
             <select
               defaultValue=""
               onChange={(e) => { addItem(e.target.value); e.target.value = ""; }}
-              className="w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-sm text-foreground"
+              className="w-full rounded-md border border-rim-2 bg-card-hover px-3 py-2 text-sm text-ink"
             >
               <option value="" disabled>Selecione um produto...</option>
               {products.map((p) => (
@@ -287,21 +287,21 @@ function SaleFormModal({
 
           {/* Items list */}
           {items.length > 0 && (
-            <div className="rounded-lg border border-zinc-800 divide-y divide-zinc-800">
+            <div className="rounded-lg border border-rim divide-y divide-rim">
               {items.map((item) => (
                 <div key={item.key} className="flex items-center justify-between px-3 py-2 gap-2">
-                  <span className="text-sm text-zinc-200 flex-1">{item.name}</span>
+                  <span className="text-sm text-ink flex-1">{item.name}</span>
                   <div className="flex items-center gap-2">
                     <input
                       type="number"
                       min={1}
                       value={item.quantity}
                       onChange={(e) => updateQty(item.key, Number(e.target.value))}
-                      className="w-14 rounded border border-zinc-700 bg-zinc-800 px-2 py-1 text-sm text-center text-foreground"
+                      className="w-14 rounded border border-rim-2 bg-card-hover px-2 py-1 text-sm text-center text-ink"
                     />
-                    <span className="text-xs text-zinc-400 w-20 text-right">{fmtBRL(item.price * item.quantity)}</span>
+                    <span className="text-xs text-ink-2 w-20 text-right">{fmtBRL(item.price * item.quantity)}</span>
                     <button type="button" onClick={() => removeItem(item.key)}>
-                      <Trash2 className="h-4 w-4 text-zinc-500 hover:text-red-400" />
+                      <Trash2 className="h-4 w-4 text-ink-3 hover:text-red-400" />
                     </button>
                   </div>
                 </div>
@@ -311,12 +311,12 @@ function SaleFormModal({
 
           {/* Discount */}
           <div className="space-y-1">
-            <label className="text-xs text-zinc-400">Desconto</label>
+            <label className="text-xs text-ink-2">Desconto</label>
             <div className="flex gap-2">
               <select
                 value={discountType}
                 onChange={(e) => setDiscountType(e.target.value as "R$" | "%")}
-                className="rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-sm text-foreground"
+                className="rounded-md border border-rim-2 bg-card-hover px-3 py-2 text-sm text-ink"
               >
                 <option>R$</option>
                 <option>%</option>
@@ -327,24 +327,24 @@ function SaleFormModal({
                 step="0.01"
                 value={discountValue}
                 onChange={(e) => setDiscountValue(Number(e.target.value))}
-                className="flex-1 rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-sm text-foreground"
+                className="flex-1 rounded-md border border-rim-2 bg-card-hover px-3 py-2 text-sm text-ink"
                 placeholder="0"
               />
             </div>
           </div>
 
           {/* Summary */}
-          <div className="rounded-lg bg-zinc-950 border border-zinc-800 p-4 space-y-1.5 text-sm">
-            <div className="flex justify-between text-zinc-400">
+          <div className="rounded-lg bg-surface border border-rim p-4 space-y-1.5 text-sm">
+            <div className="flex justify-between text-ink-2">
               <span>Subtotal</span><span>{fmtBRL(subtotal)}</span>
             </div>
             {discountValue > 0 && (
-              <div className="flex justify-between text-zinc-400">
+              <div className="flex justify-between text-ink-2">
                 <span>Desconto</span>
                 <span className="text-red-400">-{discountType === "%" ? `${discountValue}%` : fmtBRL(discountAmt)}</span>
               </div>
             )}
-            <div className="flex justify-between font-bold text-base text-foreground border-t border-zinc-800 pt-1.5">
+            <div className="flex justify-between font-bold text-base text-ink border-t border-rim pt-1.5">
               <span>Total</span><span>{fmtBRL(total)}</span>
             </div>
           </div>
@@ -452,11 +452,11 @@ export default function SalesPage() {
   return (
     <div className="p-6 space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-bold text-foreground">Vendas</h1>
+        <h1 className="text-xl font-bold text-ink">Vendas</h1>
         <div className="flex gap-2">
           <button
             onClick={exportCSV}
-            className="flex items-center gap-2 rounded-lg border border-zinc-700 px-3 py-2 text-sm text-zinc-300 hover:bg-zinc-800 transition-colors"
+            className="flex items-center gap-2 rounded-lg border border-rim-2 px-3 py-2 text-sm text-ink hover:bg-card-hover transition-colors"
           >
             <Download className="h-4 w-4" /> Exportar CSV
           </button>
@@ -470,34 +470,34 @@ export default function SalesPage() {
       </div>
 
       {loading ? (
-        <p className="text-sm text-zinc-500">Carregando...</p>
+        <p className="text-sm text-ink-3">Carregando...</p>
       ) : sales.length === 0 ? (
         <Empty message="Nenhuma venda registrada." />
       ) : (
-        <div className="rounded-xl border border-zinc-800 overflow-hidden">
+        <div className="rounded-xl border border-rim overflow-hidden">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-zinc-800 bg-zinc-900/50">
-                <th className="px-4 py-3 text-left text-xs text-zinc-400 font-medium">Data</th>
-                <th className="px-4 py-3 text-left text-xs text-zinc-400 font-medium">Cliente</th>
-                <th className="px-4 py-3 text-left text-xs text-zinc-400 font-medium">Pagamento</th>
-                <th className="px-4 py-3 text-right text-xs text-zinc-400 font-medium">Total</th>
-                <th className="px-4 py-3 text-center text-xs text-zinc-400 font-medium">Status</th>
-                <th className="px-4 py-3 text-right text-xs text-zinc-400 font-medium">Ações</th>
+              <tr className="border-b border-rim bg-card/50">
+                <th className="px-4 py-3 text-left text-xs text-ink-2 font-medium">Data</th>
+                <th className="px-4 py-3 text-left text-xs text-ink-2 font-medium">Cliente</th>
+                <th className="px-4 py-3 text-left text-xs text-ink-2 font-medium">Pagamento</th>
+                <th className="px-4 py-3 text-right text-xs text-ink-2 font-medium">Total</th>
+                <th className="px-4 py-3 text-center text-xs text-ink-2 font-medium">Status</th>
+                <th className="px-4 py-3 text-right text-xs text-ink-2 font-medium">Ações</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-zinc-800">
+            <tbody className="divide-y divide-rim">
               {sales.map((sale) => (
-                <tr key={sale.id} className="bg-zinc-900 hover:bg-zinc-800/50 transition-colors">
-                  <td className="px-4 py-3 text-zinc-300">{sale.date}</td>
-                  <td className="px-4 py-3 text-zinc-300">
+                <tr key={sale.id} className="bg-card hover:bg-card-hover/50 transition-colors">
+                  <td className="px-4 py-3 text-ink">{sale.date}</td>
+                  <td className="px-4 py-3 text-ink">
                     {customers.find((c) => c.id === sale.customer_id)?.vip && (
                       <Star className="inline h-3 w-3 text-amber-400 mr-1" />
                     )}
                     {sale.customer_name}
                   </td>
-                  <td className="px-4 py-3 text-zinc-400">{sale.payment_method}</td>
-                  <td className="px-4 py-3 text-right font-medium text-foreground">{fmtBRL(sale.total)}</td>
+                  <td className="px-4 py-3 text-ink-2">{sale.payment_method}</td>
+                  <td className="px-4 py-3 text-right font-medium text-ink">{fmtBRL(sale.total)}</td>
                   <td className="px-4 py-3 text-center">
                     <StatusBadge status={sale.refunded ? "devolvido" : "pago"} />
                   </td>
@@ -505,14 +505,14 @@ export default function SalesPage() {
                     <div className="flex items-center justify-end gap-2">
                       <button
                         onClick={() => setCouponSale(sale)}
-                        className="rounded px-2 py-1 text-xs text-zinc-400 hover:text-white hover:bg-zinc-700 transition-colors"
+                        className="rounded px-2 py-1 text-xs text-ink-2 hover:text-white hover:bg-card-hover transition-colors"
                       >
                         <Printer className="h-3.5 w-3.5" />
                       </button>
                       {!sale.refunded && (
                         <button
                           onClick={() => handleRefund(sale)}
-                          className="rounded px-2 py-1 text-xs text-zinc-400 hover:text-red-400 hover:bg-zinc-700 transition-colors"
+                          className="rounded px-2 py-1 text-xs text-ink-2 hover:text-red-400 hover:bg-card-hover transition-colors"
                         >
                           Devolver
                         </button>

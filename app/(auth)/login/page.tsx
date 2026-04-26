@@ -16,65 +16,50 @@ export default function LoginPage() {
     e.preventDefault();
     setError("");
     setLoading(true);
-
     const { error } = await supabase.auth.signInWithPassword({ email, password });
-
-    if (error) {
-      setError(error.message);
-    } else {
-      router.push("/");
-    }
-
+    if (error) { setError(error.message); } else { router.push("/"); }
     setLoading(false);
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-4">
+    <div className="min-h-screen flex items-center justify-center bg-surface px-4">
       <div className="w-full max-w-sm space-y-6">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-foreground">Entrar</h1>
-          <p className="text-sm text-zinc-400 mt-1">Acesse sua conta do Atelier</p>
+        <div className="text-center space-y-1">
+          <h1 className="text-2xl font-light tracking-widest text-ink"
+            style={{ fontFamily: "Calibri, 'Gill Sans', sans-serif" }}>
+            atelier
+          </h1>
+          <p className="text-sm text-ink-3">Acesse sua conta</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-1">
-            <label className="text-sm text-zinc-300">E-mail</label>
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-foreground placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500"
-              placeholder="seu@email.com"
-            />
-          </div>
+        <div className="bg-card rounded-2xl border border-rim p-6 space-y-4 shadow-sm">
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-1.5">
+              <label className="text-xs font-medium text-ink-2">E-mail</label>
+              <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)}
+                className="w-full rounded-lg border border-rim-2 bg-form-bg px-3 py-2.5 text-sm text-ink placeholder-ink-3 focus:outline-none focus:ring-2 focus:ring-ink-3 transition-colors"
+                placeholder="seu@email.com" />
+            </div>
 
-          <div className="space-y-1">
-            <label className="text-sm text-zinc-300">Senha</label>
-            <input
-              type="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-foreground placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500"
-              placeholder="••••••••"
-            />
-          </div>
+            <div className="space-y-1.5">
+              <label className="text-xs font-medium text-ink-2">Senha</label>
+              <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)}
+                className="w-full rounded-lg border border-rim-2 bg-form-bg px-3 py-2.5 text-sm text-ink placeholder-ink-3 focus:outline-none focus:ring-2 focus:ring-ink-3 transition-colors"
+                placeholder="••••••••" />
+            </div>
 
-          {error && <p className="text-sm text-red-400">{error}</p>}
+            {error && <p className="text-sm text-red-500">{error}</p>}
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full rounded-md bg-white py-2 text-sm font-semibold text-black hover:bg-zinc-200 disabled:opacity-50 transition-colors"
-          >
-            {loading ? "Entrando..." : "Entrar"}
-          </button>
-        </form>
+            <button type="submit" disabled={loading}
+              className="w-full rounded-lg bg-ink py-2.5 text-sm font-medium text-surface hover:opacity-90 disabled:opacity-50 transition-all">
+              {loading ? "Entrando..." : "Entrar"}
+            </button>
+          </form>
+        </div>
 
-        <p className="text-center text-sm text-zinc-400">
+        <p className="text-center text-sm text-ink-3">
           Não tem conta?{" "}
-          <Link href="/signup" className="text-white underline underline-offset-4">
+          <Link href="/signup" className="text-ink underline underline-offset-4 hover:text-ink-2 transition-colors">
             Cadastre-se
           </Link>
         </p>
