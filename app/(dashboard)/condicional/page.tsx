@@ -317,6 +317,8 @@ function FinalizeModal({
   const [qtdVendida, setQtdVendida] = useState<Record<string, number>>(
     Object.fromEntries(items.map((i) => [i.id, 0]))
   );
+  const [discountType, setDiscountType] = useState<"R$" | "%">("R$");
+  const [discountValue, setDiscountValue] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -328,7 +330,9 @@ function FinalizeModal({
   }
 
   const soldItems = items.filter((i) => (qtdVendida[i.id] ?? 0) > 0);
-  const totalVendido = soldItems.reduce((a, i) => a + i.product_price * (qtdVendida[i.id] ?? 0), 0);
+  const subtotalVendido = soldItems.reduce((a, i) => a + i.product_price * (qtdVendida[i.id] ?? 0), 0);
+  const discountAmt = discountType === "%" ? subtotalVendido * (discountValue / 100) : discountValue;
+  const totalVendido = Math.max(0, subtotalVendido - discountAmt);
   const hasAnySold = soldItems.length > 0;
 
   async function handleConfirm() {
@@ -354,10 +358,10 @@ function FinalizeModal({
 
     // Create sale for purchased items
     if (hasAnySold) {
-      const subtotal = soldItems.reduce((a, i) => a + i.product_price * (qtdVendida[i.id] ?? 0), 0);
+      const subtotal = subtotalVendido;
       const profit = soldItems.reduce(
         (a, i) => a + (i.product_price - i.product_cost) * (qtdVendida[i.id] ?? 0), 0
-      );
+      ) - discountAmt;
 
       const saleId = uid();
       const { error: saleErr } = await supabase.from("sales").insert({
@@ -367,10 +371,10 @@ function FinalizeModal({
         payment_method: payment,
         date,
         subtotal,
-        discount_type: "R$",
-        discount_value: 0,
-        total: subtotal,
-        profit,
+        discount_type: discountType,
+        discount_value: discountValue,
+        total: totalVendido,
+        profit: Math.max(0, profit),
         refunded: false,
       });
 
@@ -478,12 +482,49 @@ function FinalizeModal({
             </div>
           </div>
 
-          <div className="rounded-lg bg-surface border border-rim px-4 py-3 text-sm">
-            {hasAnySold ? (
-              <div className="flex justify-between font-bold text-base text-ink">
-                <span>Total vendido</span>
-                <span>{fmtBRL(totalVendido)}</span>
+          {hasAnySold && (
+            <div className="space-y-1">
+              <label className="text-xs text-ink-2">Desconto</label>
+              <div className="flex gap-2">
+                <select
+                  value={discountType}
+                  onChange={(e) => setDiscountType(e.target.value as "R$" | "%")}
+                  className="rounded-md border border-rim-2 bg-card-hover px-3 py-2 text-sm text-ink"
+                >
+                  <option>R$</option>
+                  <option>%</option>
+                </select>
+                <input
+                  type="number"
+                  min={0}
+                  step="0.01"
+                  value={discountValue}
+                  onChange={(e) => setDiscountValue(Number(e.target.value))}
+                  className="flex-1 rounded-md border border-rim-2 bg-card-hover px-3 py-2 text-sm text-ink"
+                  placeholder="0"
+                />
               </div>
+            </div>
+          )}
+
+          <div className="rounded-lg bg-surface border border-rim p-4 text-sm space-y-1.5">
+            {hasAnySold ? (
+              <>
+                <div className="flex justify-between text-ink-2">
+                  <span>Subtotal</span>
+                  <span>{fmtBRL(subtotalVendido)}</span>
+                </div>
+                {discountValue > 0 && (
+                  <div className="flex justify-between text-red-400">
+                    <span>Desconto</span>
+                    <span>-{discountType === "%" ? `${discountValue}%` : fmtBRL(discountAmt)}</span>
+                  </div>
+                )}
+                <div className="flex justify-between font-bold text-base text-ink border-t border-rim pt-1.5">
+                  <span>Total</span>
+                  <span>{fmtBRL(totalVendido)}</span>
+                </div>
+              </>
             ) : (
               <p className="text-center text-ink-3">Nenhuma peça comprada — todas voltarão ao estoque</p>
             )}
@@ -637,20 +678,12 @@ export default function CondicionalPage() {
                     <td className="px-4 py-3 text-right">
                       <div className="flex items-center justify-end gap-2">
                         {c.status === "ativo" && (
-                          <>
-                            <button
-                              onClick={() => setFinalizing(c)}
-                              className="rounded px-2 py-1 text-xs font-medium bg-emerald-100 text-emerald-700 hover:bg-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-400 transition-colors"
-                            >
-                              Finalizar
-                            </button>
-                            <button
-                              onClick={() => handleCancel(c)}
-                              className="rounded px-2 py-1 text-xs text-ink-3 hover:text-red-400 hover:bg-card-hover transition-colors"
-                            >
-                              Cancelar
-                            </button>
-                          </>
+                          <button
+                            onClick={() => setFinalizing(c)}
+                            className="rounded px-2 py-1 text-xs font-medium bg-emerald-100 text-emerald-700 hover:bg-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-400 transition-colors"
+                          >
+                            Finalizar
+                          </button>
                         )}
                         <button
                           onClick={() => handleDelete(c)}
