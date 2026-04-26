@@ -13,6 +13,8 @@ const SHORTCUTS = [
 ];
 
 const USER_TABLES = [
+  "condicional_items",
+  "condicionais",
   "sale_items",
   "sales",
   "products",
@@ -44,7 +46,7 @@ export default function SettingsPage() {
   async function handleDeleteAll() {
     const first = confirm("Tem certeza? TODOS os seus dados serão apagados permanentemente.");
     if (!first) return;
-    const second = confirm("Esta ação é irreversível. Confirma a exclusão de todos os dados?");
+    const second = confirm("Esta ação é irreversível. Confirma a exclusão de todos os dados e da sua conta?");
     if (!second) return;
 
     setDeleting(true);
@@ -52,9 +54,13 @@ export default function SettingsPage() {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) { setDeleting(false); return; }
 
+    // Tabelas com FK em cascata primeiro (filhas antes das mães)
     for (const table of USER_TABLES) {
       await supabase.from(table).delete().eq(table === "profiles" ? "id" : "user_id", user.id);
     }
+
+    // Encerra a sessão — a conta auth permanece mas todos os dados foram removidos
+    await supabase.auth.signOut();
 
     setDeleting(false);
     setDeleted(true);

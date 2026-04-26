@@ -10,11 +10,13 @@ export default function SignupPage() {
   const [storeName, setStoreName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [consent, setConsent] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (!consent) { setError("Você precisa aceitar a política de privacidade para continuar."); return; }
     setError("");
     setLoading(true);
 
@@ -65,9 +67,23 @@ export default function SignupPage() {
                 placeholder="••••••••" />
             </div>
 
+            <label className="flex items-start gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={consent}
+                onChange={(e) => setConsent(e.target.checked)}
+                className="mt-0.5 accent-ink"
+              />
+              <span className="text-xs text-ink-3 leading-relaxed">
+                Concordo com o armazenamento dos meus dados (nome, e-mail e dados da loja) para uso exclusivo nesta plataforma, conforme a{" "}
+                <strong className="text-ink-2">Lei Geral de Proteção de Dados (LGPD)</strong>.
+                Você pode solicitar a exclusão dos seus dados a qualquer momento em Configurações.
+              </span>
+            </label>
+
             {error && <p className="text-sm text-red-500">{error}</p>}
 
-            <button type="submit" disabled={loading}
+            <button type="submit" disabled={loading || !consent}
               className="w-full rounded-lg bg-ink py-2.5 text-sm font-medium text-surface hover:opacity-90 disabled:opacity-50 transition-all">
               {loading ? "Criando conta..." : "Criar conta"}
             </button>

@@ -33,7 +33,7 @@ export default function InsightsPage() {
       { data: expenses },
     ] = await Promise.all([
       supabase.from("sales").select("*").eq("user_id", user.id),
-      supabase.from("sale_items").select("*"),
+      supabase.from("sale_items").select("*, sales!inner(user_id)").eq("sales.user_id", user.id),
       supabase.from("products").select("*").eq("user_id", user.id),
       supabase.from("customers").select("*").eq("user_id", user.id),
       supabase.from("expenses").select("*").eq("user_id", user.id),
